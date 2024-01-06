@@ -11,37 +11,42 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  username  String   @unique
-  email     String   @unique
+  id        String    @id @unique
+  name      String
+  phone     String    @unique
+  username  String    @unique
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Tasks      Task[]
-  Projects Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Tasks     Task[]
+  Projects  Project[]
 }
 
 model Task {
-  id           String   @id
+  id           String   @id @unique
   title        String
   description  String
   priority     Int
   active       Boolean
   user         User     @relation(fields: [userId], references: [id])
   userId       String
-  subTasks      Task[]   @relation("ParentTask")
-  parentTask    Task?    @relation("ParentTask", fields: [parentTaskId], references: [id])
-  parentTaskId  String?
+  subTasks     Task[]   @relation("ParentTask")
+  parentTask   Task?    @relation("ParentTask", fields: [parentTaskId], references: [id])
+  parentTaskId String?
+  project      Project  @relation(fields: [projectId], references: [id])
+  projectId    String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
 model Project {
-  id        String   @id
+  id        String   @id @unique
   title     String
   slug      String
   user      User     @relation(fields: [userId], references: [id])
   userId    String
+  Tasks     Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
