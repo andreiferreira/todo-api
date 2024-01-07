@@ -25,8 +25,8 @@ export class CreateUserController {
                 phone,
                 password,
                 confirmPassword
-            } = createUserSchema.parse(req.body)    
-            
+            } = createUserSchema.parse(req.body)
+
             if (password != confirmPassword) {
                 throw Error('Senhas nao conferem.')
             }
@@ -42,7 +42,9 @@ export class CreateUserController {
             return res.json(useCaseResult).send()
 
         } catch (error) {
-            throw Error(`Error: ${error}`)
+            return  res.json({
+                body: error
+            })
         }
     }
 }
