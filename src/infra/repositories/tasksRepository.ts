@@ -5,17 +5,11 @@ import { ITask } from "../../entities/task";
 
 export class TasksRepository implements ITasksRepository {
 
-    async create(task: ITask): Promise<any> {
+    async create(task): Promise<any> {
+
         await prismaClient.task.create({
             data: {
-
                 ...task,
-                user: {
-                    connect: {
-                        id: task.id
-                    }
-                }
-                
             }
         })
     }

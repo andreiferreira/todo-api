@@ -36,8 +36,8 @@ model Task {
   subTasks     Task[]   @relation("ParentTask")
   parentTask   Task?    @relation("ParentTask", fields: [parentTaskId], references: [id])
   parentTaskId String?
-  project      Project  @relation(fields: [projectId], references: [id])
-  projectId    String
+  project      Project?  @relation(fields: [projectId], references: [id])
+  projectId    String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
