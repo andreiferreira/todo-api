@@ -5,13 +5,26 @@ import { ITask } from "../../entities/task";
 
 export class TasksRepository implements ITasksRepository {
 
-    async create(task): Promise<any> {
+    async create(task: any): Promise<ITask> {
 
-        await prismaClient.task.create({
+        const createdTask = await prismaClient.task.create({
             data: {
                 ...task,
             }
         })
+
+        return createdTask
+    }
+
+    async listTasksByUserId(userId: string): Promise<any> {
+
+        const tasks = await prismaClient.task.findMany({
+            where: {
+                userId: userId
+            }
+        })
+
+        return tasks
     }
 
 }
