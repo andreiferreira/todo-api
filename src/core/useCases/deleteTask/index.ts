@@ -6,8 +6,8 @@ import { DeleteTaskController } from "./deleteTaskController";
 
 
 const tasksRepository = new TasksRepository()
-const deleteTaskUseCase =  new DeleteTaskUseCase(tasksRepository)
-const getTaskUseCase = new GetTaskUseCase(tasksRepository)
-const deleteTaskController = new DeleteTaskController(deleteTaskUseCase, getTaskUseCase)
+const getTaskUseCase = new GetTaskUseCase(tasksRepository, )
+const deleteTaskUseCase =  new DeleteTaskUseCase(tasksRepository, getTaskUseCase)
+const deleteTaskController = new DeleteTaskController(deleteTaskUseCase)
 
 export {deleteTaskController, deleteTaskUseCase}

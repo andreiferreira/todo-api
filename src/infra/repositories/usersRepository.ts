@@ -31,4 +31,24 @@ export class UsersRepository implements IUsersRepository {
             }
         )
     }
+
+    async findUser(phone?: string, email?: string, username?: string): Promise<User> {
+        return await prismaClient.user.findFirst(
+            {
+                where: {
+                    OR: [
+                        {
+                            phone: phone
+                        },
+                        {
+                            email: email
+                        },
+                        {
+                            username: username
+                        }
+                    ]
+                },
+            }
+        )
+    }
 }

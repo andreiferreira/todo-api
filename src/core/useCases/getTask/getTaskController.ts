@@ -14,13 +14,14 @@ export class GetTaskController {
             })
 
             const {id} = getTaskSchema.parse(req.query);
+
             const task = await this.getTaskUseCase.execute(id)
 
             return res.json(task)
             
         } catch (error) {
 
-            return res.json(error)
+            return res.status(error.statusCode || 400).json(error)
             
         }
     }

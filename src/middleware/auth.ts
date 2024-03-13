@@ -15,9 +15,10 @@ export const authMiddleware = async(req: Request, res: Response, next: NextFunct
     try {
 
     if(!authorization) {
-        return res.json({
-            status: 401,
-            body: 'Não autorizado'
+        return res.status(401).
+            json({
+                error: true,
+                message: 'Não autorizado'
         })
     }
 
@@ -28,8 +29,10 @@ export const authMiddleware = async(req: Request, res: Response, next: NextFunct
     const user = await usersRepository.findById(id);
 
     if(!user) {
-        return res.json({
-            body: 'Não autorizado'
+        return res.status(401).
+            json({
+                error: true,
+                message: 'Não autorizado'
         })
     }
 
@@ -40,11 +43,11 @@ export const authMiddleware = async(req: Request, res: Response, next: NextFunct
     next()
 
     } catch(error) {
-        res.json({
-            status: 401,
-            body: 'Não autorizado'
+        res.status(401).
+            json({
+                error: true,
+                message: 'Não autorizado'
         })
-        throw new UnauthorizedError('Não autorizado')
     }
 
 }

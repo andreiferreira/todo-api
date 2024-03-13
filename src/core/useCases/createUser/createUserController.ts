@@ -15,7 +15,11 @@ export class CreateUserController {
             phone: z.string(),
             password: z.string(),
             confirmPassword: z.string()
-        })
+        }).refine(data => {
+            return data.password === data.confirmPassword;
+        }, {
+            message: "Password dont match"
+        });
 
         try {
             const {
@@ -27,11 +31,7 @@ export class CreateUserController {
                 confirmPassword
             } = createUserSchema.parse(req.body)
 
-            if (password != confirmPassword) {
-                throw Error('Senhas nao conferem.')
-            }
-
-            const useCaseResult = await this.createUserUseCase.execute({
+            const createdUser = await this.createUserUseCase.execute({
                 name,
                 username,
                 phone,
@@ -39,11 +39,18 @@ export class CreateUserController {
                 password,
             })
 
-            return res.json(useCaseResult).send()
+            return res.
+            status(201).
+            json({
+                data: {
+                    user: createdUser
+                }
+            })
 
         } catch (error) {
-            return  res.json({
-                body: error
+            return  res.status(error.statusCode || 400).json({
+                error: true,
+                message: error.message
             })
         }
     }

@@ -6,8 +6,8 @@ import { UpdateTaskController } from "./updateTaskController";
 const tasksRepository = new TasksRepository();
 
 const getTaskUseCase = new GetTaskUseCase(tasksRepository)
-const updateTasUseCase = new UpdateTasUseCase(tasksRepository)
+const updateTasUseCase = new UpdateTasUseCase(tasksRepository, getTaskUseCase)
 
-const updateTaskController = new UpdateTaskController(updateTasUseCase, getTaskUseCase)
+const updateTaskController = new UpdateTaskController(updateTasUseCase)
 
 export {updateTaskController, updateTasUseCase}
