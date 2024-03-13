@@ -24,7 +24,7 @@ export class FindUserController {
 
             console.log('error: ', error)
             return res
-                .status(error.statusCode)
+                .status(error.statusCode || 400)
                 .json({
                     body: error.message
                 })

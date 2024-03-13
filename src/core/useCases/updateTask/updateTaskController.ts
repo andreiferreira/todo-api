@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GetTaskUseCase } from "../getTask/getTask.useCase";
 
 export class UpdateTaskController {
-    constructor(private updateTaskUseCase: UpdateTasUseCase, private getTaskUseCase: GetTaskUseCase) { }
+    constructor(private updateTaskUseCase: UpdateTasUseCase) { }
 
     async handle(req: Request, res: Response) {
 
@@ -22,15 +22,6 @@ export class UpdateTaskController {
             const { id } = getTaskSchema.parse(req.params);
             const { title, description, priority } = updateTaskSchema.parse(req.body)
 
-            const task = await this.getTaskUseCase.execute(id);
-
-            if (!task) {
-                return res.status(494).json('Task not found')
-            }
-
-            if(task.userId !== req.user.id) {
-                return res.status(403).json('Forbbiden')
-            }
             const editedTask = await this.updateTaskUseCase.execute({ id, title, description, priority, updatedAt: new Date() })
 
             return res.status(200).json(editedTask)

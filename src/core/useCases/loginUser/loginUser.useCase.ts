@@ -12,7 +12,7 @@ export class LoginUserUseCase {
         const userExist = await this.usersRepository.findByEmail(email);
 
         if(!userExist) {
-            throw new NotFoundError('Email or password incorrects')
+            throw new BadRequestError('Email or password incorrects')
         }
 
         const verifyPass = await bcrypt.compare(password, userExist.password);

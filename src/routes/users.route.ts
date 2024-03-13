@@ -6,7 +6,7 @@ import { findUserController } from "../core/useCases/findUser";
 
 const router = Router();
 
-router.post('/users', authMiddleware, (request, response) => {
+router.post('/users', (request, response) => {
     return createUserController.handle(request, response);
 })
 

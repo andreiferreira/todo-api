@@ -20,8 +20,9 @@ export class LoginUserController {
             return res.json(result).send()
 
         } catch(error) {
-            return res.json({
-                body: error
+            return res.status(400).json({
+                error: true,
+                message: error.message
             })
         }
     }
